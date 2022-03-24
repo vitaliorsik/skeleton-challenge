@@ -1,28 +1,17 @@
-import {config} from '../constants/config';
 import Product from '../models/product';
-import {ELEMENT_ALREADY_EXIST} from "../constants/errors";
-
-const AWS = require('aws-sdk');
-
-AWS.config.update({
-    region: config.region,
-    accessKeyId: config.accessKeyId,
-    secretAccessKey: config.secretAccessKey,
-});
-
-const dynamoClient = new AWS
-    .DynamoDB.DocumentClient();
+import {ELEMENT_ALREADY_EXIST} from '../constants/errors';
+import {dynamoClient} from '../constants/aws';
+import {DeleteItemOutput, GetItemOutput, PutItemOutput, ScanOutput} from 'aws-sdk/clients/dynamodb';
 const TABLE_NAME = 'products';
 
-export const getProducts = async () => {
+export const getProducts = async (): Promise<ScanOutput> => {
     const params = {
         TableName: TABLE_NAME
     };
-    const products = await dynamoClient.scan(params).promise();
-    return products;
+    return await dynamoClient.scan(params).promise();
 }
 
-export const getProductByName = async (name: string) => {
+export const getProductByName = async (name: string): Promise<GetItemOutput> => {
     const params = {
         TableName: TABLE_NAME,
         Key: {
@@ -32,7 +21,7 @@ export const getProductByName = async (name: string) => {
     return await dynamoClient.get(params).promise();
 }
 
-export const addProduct = async (product: Product) => {
+export const addProduct = async (product: Product): Promise<PutItemOutput> => {
     const params = {
         TableName: TABLE_NAME,
         Item: product,
@@ -44,7 +33,7 @@ export const addProduct = async (product: Product) => {
     return await dynamoClient.put(params).promise();
 }
 
-export const updateProduct = async (product: Product) => {
+export const updateProduct = async (product: Product): Promise<PutItemOutput> => {
     const params = {
         TableName: TABLE_NAME,
         Item: product,
@@ -52,7 +41,7 @@ export const updateProduct = async (product: Product) => {
     return await dynamoClient.put(params).promise();
 }
 
-export const deleteProduct = async (name: string) => {
+export const deleteProduct = async (name: string): Promise<DeleteItemOutput> => {
     const params = {
         TableName: TABLE_NAME,
         Key: {

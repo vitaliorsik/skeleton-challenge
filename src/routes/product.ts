@@ -1,13 +1,13 @@
-import express from "express";
+import express from 'express';
 import {
     addProduct,
     deleteProduct,
     getProductByName,
     getProducts,
     updateProduct
-} from "../controllers/dynamoDB";
-import Product from "../models/product";
-import {ELEMENT_ALREADY_EXIST} from "../constants/errors";
+} from '../controllers/product';
+import Product from '../models/product';
+import {ELEMENT_ALREADY_EXIST, UNKNOWN_ERROR} from '../constants/errors';
 
 const productRouter = express.Router();
 
@@ -17,7 +17,7 @@ productRouter.get('/', async (req, res) => {
         res.json(characters);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ err: 'Something went wrong' });
+        res.status(500).json({ err: UNKNOWN_ERROR });
     }
 })
 
@@ -28,7 +28,7 @@ productRouter.get('/:name', async (req, res) => {
         res.json(character);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ err: 'Something went wrong' });
+        res.status(500).json({ err: UNKNOWN_ERROR });
     }
 })
 
@@ -42,7 +42,7 @@ productRouter.post('/', async (req, res) => {
         if (error instanceof Error && error.message === ELEMENT_ALREADY_EXIST) {
             return res.status(500).json({ err: ELEMENT_ALREADY_EXIST });
         }
-        res.status(500).json({ err: 'Something went wrong' });
+        res.status(500).json({ err: UNKNOWN_ERROR });
     }
 })
 
@@ -54,7 +54,7 @@ productRouter.put('/:name', async (req, res) => {
         res.json(updatedCharacter);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ err: 'Something went wrong' });
+        res.status(500).json({ err: UNKNOWN_ERROR });
     }
 })
 
@@ -65,7 +65,7 @@ productRouter.delete('/:name', async (req, res) => {
         res.json(deletedCharacter);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ err: 'Something went wrong' });
+        res.status(500).json({ err: UNKNOWN_ERROR });
     }
 })
 
