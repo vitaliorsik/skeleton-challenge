@@ -1,0 +1,159 @@
+{
+	"variables": [],
+	"info": {
+		"name": "skeleton-challenge",
+		"_postman_id": "fe1fa200-097c-f95e-3791-023c43b4068b",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "products",
+			"description": "",
+			"item": [
+				{
+					"name": "/",
+					"request": {
+						"url": "http://localhost:8080/products",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjIzY2I1MmVmY2ViOTJhNzg4MzE5YTFhIiwiZW1haWwiOiJ1c2VyQG1haWwucnUiLCJpYXQiOjE2NDgxNDg1MzIsImV4cCI6MTY0ODE1NTczMn0.haoZ7q3vGA_eZJHnmw7YaeC1O5itVG36za2mW3kI9Nc",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"Kyle\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "/",
+					"request": {
+						"url": "http://localhost:8080/products",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Apple Juice\",\n\t\"price\": 200\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "/:name",
+					"request": {
+						"url": "http://localhost:8080/products/Apple Juice",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "/:name",
+					"request": {
+						"url": "http://localhost:8080/products/Apple juice",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"James Quick\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "/:name",
+					"request": {
+						"url": "http://localhost:8080/products/Apple Juice",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"James Quick\",\n\t\"price\": 250\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "users",
+			"description": "",
+			"item": [
+				{
+					"name": "/register copy",
+					"request": {
+						"url": "http://localhost:4001/register",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"first_name\": \"Idris\",\n\t\"last_name\": \"Olubisi\",\n\t\"email\": \"user@mail.ru\",\n\t\"password\": \"1234567\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "/login copy",
+					"request": {
+						"url": "http://localhost:8080/auth/login",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"user@mail.ru\",\n\t\"password\": \"1234567\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
