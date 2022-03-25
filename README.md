@@ -27,7 +27,8 @@ PORT=...
 ```
 
 ## AWS
-Configure Amazon Simple Email Service to send email message to reset an old password and set a new password.
+* Configure Amazon Simple Email Service to send email message to reset an old password and set a new password.
+* Create `products` table with `id` Partition key and `users` with `email` Partition key in dynamoDB.
 
 ## Postman
 There is `skeleton-challenge.postman_collection.json` to import file for Postman for products endpoints
