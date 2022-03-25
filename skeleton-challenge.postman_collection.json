@@ -8,6 +8,72 @@
 	},
 	"item": [
 		{
+			"name": "users",
+			"description": "",
+			"item": [
+				{
+					"name": "/register",
+					"request": {
+						"url": "http://localhost:8080/auth/register",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"cegopat526@jooffy.com\",\n\t\"password\": \"1234567\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "/login",
+					"request": {
+						"url": "http://localhost:8080/auth/login",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"cegopat526@jooffy.com\",\n\t\"password\": \"aecb7969371c159e\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "/forget",
+					"request": {
+						"url": "http://localhost:8080/auth/forget",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"cegopat526@jooffy.com\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "products",
 			"description": "",
 			"item": [
@@ -24,7 +90,57 @@
 							},
 							{
 								"key": "x-access-token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjIzY2I1MmVmY2ViOTJhNzg4MzE5YTFhIiwiZW1haWwiOiJ1c2VyQG1haWwucnUiLCJpYXQiOjE2NDgxNDg1MzIsImV4cCI6MTY0ODE1NTczMn0.haoZ7q3vGA_eZJHnmw7YaeC1O5itVG36za2mW3kI9Nc",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAbWFpbC5ydSIsInBhc3N3b3JkIjoiJDJiJDEwJGlILklaVi5yZDR1VkhIdUVjVFk1SHU4TWNIdW9jU3dOejQ4S1p4MWk2clZMd0lCZ0VmNVEuIiwiaWF0IjoxNjQ4MTk4NDc4fQ.VNOSegphrn8rN_gMI23HA_l2ZQz0Kq1AiRfuaON8xBg",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"Kyle\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "/ - token required",
+					"request": {
+						"url": "http://localhost:8080/products",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "x-access-token",
+								"value": "",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"Kyle\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "/ - invalid token",
+					"request": {
+						"url": "http://localhost:8080/products",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "x-access-token",
+								"value": "2",
 								"description": ""
 							}
 						],
@@ -46,6 +162,86 @@
 								"key": "Content-Type",
 								"value": "application/json",
 								"description": ""
+							},
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAbWFpbC5ydSIsInBhc3N3b3JkIjoiJDJiJDEwJGlILklaVi5yZDR1VkhIdUVjVFk1SHU4TWNIdW9jU3dOejQ4S1p4MWk2clZMd0lCZ0VmNVEuIiwiaWF0IjoxNjQ4MTk4NDc4fQ.VNOSegphrn8rN_gMI23HA_l2ZQz0Kq1AiRfuaON8xBg",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Apple\",\n\t\"price\": 235\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "/ - token required",
+					"request": {
+						"url": "http://localhost:8080/products",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "x-access-token",
+								"value": "",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Apple Juice 23\",\n\t\"price\": 235\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "/ - invalid token",
+					"request": {
+						"url": "http://localhost:8080/products",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "x-access-token",
+								"value": "twet",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Apple Juice 23\",\n\t\"price\": 235\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "/ - element exist",
+					"request": {
+						"url": "http://localhost:8080/products",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAbWFpbC5ydSIsInBhc3N3b3JkIjoiJDJiJDEwJGlILklaVi5yZDR1VkhIdUVjVFk1SHU4TWNIdW9jU3dOejQ4S1p4MWk2clZMd0lCZ0VmNVEuIiwiaWF0IjoxNjQ4MTk4NDc4fQ.VNOSegphrn8rN_gMI23HA_l2ZQz0Kq1AiRfuaON8xBg",
+								"description": ""
 							}
 						],
 						"body": {
@@ -57,7 +253,74 @@
 					"response": []
 				},
 				{
+					"name": "/ - required inputs",
+					"request": {
+						"url": "http://localhost:8080/products",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAbWFpbC5ydSIsInBhc3N3b3JkIjoiJDJiJDEwJGlILklaVi5yZDR1VkhIdUVjVFk1SHU4TWNIdW9jU3dOejQ4S1p4MWk2clZMd0lCZ0VmNVEuIiwiaWF0IjoxNjQ4MTk4NDc4fQ.VNOSegphrn8rN_gMI23HA_l2ZQz0Kq1AiRfuaON8xBg",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Apple Juice\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "/ - invalid price",
+					"request": {
+						"url": "http://localhost:8080/products",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAbWFpbC5ydSIsInBhc3N3b3JkIjoiJDJiJDEwJGlILklaVi5yZDR1VkhIdUVjVFk1SHU4TWNIdW9jU3dOejQ4S1p4MWk2clZMd0lCZ0VmNVEuIiwiaWF0IjoxNjQ4MTk4NDc4fQ.VNOSegphrn8rN_gMI23HA_l2ZQz0Kq1AiRfuaON8xBg",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Apple Juice\",\n\t\"price\": \"Invalid\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
 					"name": "/:name",
+					"request": {
+						"url": "http://localhost:8080/products/Apple Juice",
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAbWFpbC5ydSIsInBhc3N3b3JkIjoiJDJiJDEwJGlILklaVi5yZDR1VkhIdUVjVFk1SHU4TWNIdW9jU3dOejQ4S1p4MWk2clZMd0lCZ0VmNVEuIiwiaWF0IjoxNjQ4MTk4NDc4fQ.VNOSegphrn8rN_gMI23HA_l2ZQz0Kq1AiRfuaON8xBg",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "/:name - token required",
 					"request": {
 						"url": "http://localhost:8080/products/Apple Juice",
 						"method": "GET",
@@ -68,14 +331,129 @@
 					"response": []
 				},
 				{
+					"name": "/:name - invalid token",
+					"request": {
+						"url": "http://localhost:8080/products/Apple Juice",
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "2",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "/:name - not found",
+					"request": {
+						"url": "http://localhost:8080/products/Apple Juice 234344444",
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAbWFpbC5ydSIsInBhc3N3b3JkIjoiJDJiJDEwJGlILklaVi5yZDR1VkhIdUVjVFk1SHU4TWNIdW9jU3dOejQ4S1p4MWk2clZMd0lCZ0VmNVEuIiwiaWF0IjoxNjQ4MTk4NDc4fQ.VNOSegphrn8rN_gMI23HA_l2ZQz0Kq1AiRfuaON8xBg",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
 					"name": "/:name",
 					"request": {
-						"url": "http://localhost:8080/products/Apple juice",
+						"url": "http://localhost:8080/products/Apple Juice 23345",
 						"method": "DELETE",
 						"header": [
 							{
 								"key": "Content-Type",
 								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAbWFpbC5ydSIsInBhc3N3b3JkIjoiJDJiJDEwJGlILklaVi5yZDR1VkhIdUVjVFk1SHU4TWNIdW9jU3dOejQ4S1p4MWk2clZMd0lCZ0VmNVEuIiwiaWF0IjoxNjQ4MTk4NDc4fQ.VNOSegphrn8rN_gMI23HA_l2ZQz0Kq1AiRfuaON8xBg",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"James Quick\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "/:name - token required",
+					"request": {
+						"url": "http://localhost:8080/products/Apple Juice 2355",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "x-access-token",
+								"value": "",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"James Quick\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "/:name - invalid token",
+					"request": {
+						"url": "http://localhost:8080/products/Apple Juice 2355",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "x-access-token",
+								"value": "2",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"James Quick\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "/:name - not found",
+					"request": {
+						"url": "http://localhost:8080/products/Apple juice 4234234324",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": "",
+								"disabled": true
+							},
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAbWFpbC5ydSIsInBhc3N3b3JkIjoiJDJiJDEwJGlILklaVi5yZDR1VkhIdUVjVFk1SHU4TWNIdW9jU3dOejQ4S1p4MWk2clZMd0lCZ0VmNVEuIiwiaWF0IjoxNjQ4MTk4NDc4fQ.VNOSegphrn8rN_gMI23HA_l2ZQz0Kq1AiRfuaON8xBg",
 								"description": ""
 							}
 						],
@@ -97,6 +475,11 @@
 								"key": "Content-Type",
 								"value": "application/json",
 								"description": ""
+							},
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAbWFpbC5ydSIsInBhc3N3b3JkIjoiJDJiJDEwJGlILklaVi5yZDR1VkhIdUVjVFk1SHU4TWNIdW9jU3dOejQ4S1p4MWk2clZMd0lCZ0VmNVEuIiwiaWF0IjoxNjQ4MTk4NDc4fQ.VNOSegphrn8rN_gMI23HA_l2ZQz0Kq1AiRfuaON8xBg",
+								"description": ""
 							}
 						],
 						"body": {
@@ -106,48 +489,127 @@
 						"description": ""
 					},
 					"response": []
-				}
-			]
-		},
-		{
-			"name": "users",
-			"description": "",
-			"item": [
+				},
 				{
-					"name": "/register copy",
+					"name": "/:name - token required",
 					"request": {
-						"url": "http://localhost:4001/register",
-						"method": "POST",
+						"url": "http://localhost:8080/products/Apple Juice",
+						"method": "PUT",
 						"header": [
 							{
 								"key": "Content-Type",
 								"value": "application/json",
 								"description": ""
+							},
+							{
+								"key": "x-access-token",
+								"value": "",
+								"description": ""
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"first_name\": \"Idris\",\n\t\"last_name\": \"Olubisi\",\n\t\"email\": \"user@mail.ru\",\n\t\"password\": \"1234567\"\n}"
+							"raw": "{\n\t\"name\": \"James Quick\",\n\t\"price\": 250\n}"
 						},
 						"description": ""
 					},
 					"response": []
 				},
 				{
-					"name": "/login copy",
+					"name": "/:name - invalid token",
 					"request": {
-						"url": "http://localhost:8080/auth/login",
-						"method": "POST",
+						"url": "http://localhost:8080/products/Apple Juice",
+						"method": "PUT",
 						"header": [
 							{
 								"key": "Content-Type",
 								"value": "application/json",
 								"description": ""
+							},
+							{
+								"key": "x-access-token",
+								"value": "234",
+								"description": ""
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"email\": \"user@mail.ru\",\n\t\"password\": \"1234567\"\n}"
+							"raw": "{\n\t\"name\": \"James Quick\",\n\t\"price\": 250\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "/:name - not found",
+					"request": {
+						"url": "http://localhost:8080/products/Apple Juice 42555",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAbWFpbC5ydSIsInBhc3N3b3JkIjoiJDJiJDEwJGlILklaVi5yZDR1VkhIdUVjVFk1SHU4TWNIdW9jU3dOejQ4S1p4MWk2clZMd0lCZ0VmNVEuIiwiaWF0IjoxNjQ4MTk4NDc4fQ.VNOSegphrn8rN_gMI23HA_l2ZQz0Kq1AiRfuaON8xBg",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"James Quick\",\n\t\"price\": 250\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "/:name - required inputs",
+					"request": {
+						"url": "http://localhost:8080/products/Apple Juice",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAbWFpbC5ydSIsInBhc3N3b3JkIjoiJDJiJDEwJGlILklaVi5yZDR1VkhIdUVjVFk1SHU4TWNIdW9jU3dOejQ4S1p4MWk2clZMd0lCZ0VmNVEuIiwiaWF0IjoxNjQ4MTk4NDc4fQ.VNOSegphrn8rN_gMI23HA_l2ZQz0Kq1AiRfuaON8xBg",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"James Quick\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "/:name - invalid price",
+					"request": {
+						"url": "http://localhost:8080/products/Apple Juice",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAbWFpbC5ydSIsInBhc3N3b3JkIjoiJDJiJDEwJGlILklaVi5yZDR1VkhIdUVjVFk1SHU4TWNIdW9jU3dOejQ4S1p4MWk2clZMd0lCZ0VmNVEuIiwiaWF0IjoxNjQ4MTk4NDc4fQ.VNOSegphrn8rN_gMI23HA_l2ZQz0Kq1AiRfuaON8xBg",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"James Quick\",\n\t\"price\": \"invalid\"\n}"
 						},
 						"description": ""
 					},
