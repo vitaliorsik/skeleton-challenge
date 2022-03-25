@@ -4,7 +4,7 @@ import {
     checkProductExist,
     checkProductValidity,
     deleteProduct,
-    getProductByName,
+    getProductById,
     getProducts,
     updateProduct
 } from '../controllers/product';
@@ -14,6 +14,7 @@ import {
     PRODUCT_NOT_FOUNT,
     UNKNOWN_ERROR
 } from '../constants/errors';
+import {generateRandomString} from "../utils";
 
 const productRouter = express.Router();
 
@@ -27,10 +28,10 @@ productRouter.get('/', async (req, res) => {
     }
 })
 
-productRouter.get('/:name', async (req, res) => {
-    const name = req.params.name;
+productRouter.get('/:id', async (req, res) => {
+    const id = req.params.id;
     try {
-        const product = await getProductByName(name);
+        const product = await getProductById(id);
         if (!product) {
             return res.status(404).send(PRODUCT_NOT_FOUNT);
         }
@@ -43,6 +44,7 @@ productRouter.get('/:name', async (req, res) => {
 
 productRouter.post('/', checkProductValidity, async (req, res) => {
     const product: Product = req.body;
+    product.id = generateRandomString(8);
     try {
         await addProduct(product);
         res.sendStatus(201);
@@ -55,9 +57,9 @@ productRouter.post('/', checkProductValidity, async (req, res) => {
     }
 })
 
-productRouter.put('/:name', checkProductValidity, checkProductExist, async (req, res) => {
+productRouter.put('/:id', checkProductValidity, checkProductExist, async (req, res) => {
     const product: Product = req.body;
-    product.name = req.params.name;
+    product.id = req.params.id;
     try {
         await updateProduct(product);
         res.sendStatus(204);
@@ -67,10 +69,10 @@ productRouter.put('/:name', checkProductValidity, checkProductExist, async (req,
     }
 })
 
-productRouter.delete('/:name', checkProductExist, async (req, res) => {
-    const name = req.params.name;
+productRouter.delete('/:id', checkProductExist, async (req, res) => {
+    const id = req.params.id;
     try {
-        await deleteProduct(name);
+        await deleteProduct(id);
         res.sendStatus(204);
     } catch (error) {
         console.error(error);

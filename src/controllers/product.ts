@@ -1,5 +1,5 @@
 import Product from '../models/product';
-import {ELEMENT_ALREADY_EXIST, INVALID_PRICE, PRODUCT_NOT_FOUNT, REQUIRED_INPUTS} from '../constants/errors';
+import {INVALID_PRICE, PRODUCT_NOT_FOUNT, REQUIRED_INPUTS} from '../constants/errors';
 import {dynamoClient} from '../constants/aws';
 import {DeleteItemOutput, PutItemOutput, ScanOutput} from 'aws-sdk/clients/dynamodb';
 import {isEmptyObject, isNumber} from '../utils';
@@ -13,11 +13,11 @@ export const getProducts = async (): Promise<ScanOutput> => {
     return await dynamoClient.scan(params).promise();
 }
 
-export const getProductByName = async (name: string): Promise<Product> => {
+export const getProductById = async (id: string): Promise<Product> => {
     const params = {
         TableName: TABLE_NAME,
         Key: {
-            name
+            id
         }
     }
     const productResult = await dynamoClient.get(params).promise();
@@ -28,10 +28,6 @@ export const addProduct = async (product: Product): Promise<PutItemOutput> => {
     const params = {
         TableName: TABLE_NAME,
         Item: product,
-    }
-    const existentProduct = await getProductByName(product.name);
-    if (existentProduct) {
-        throw new Error(ELEMENT_ALREADY_EXIST);
     }
     return await dynamoClient.put(params).promise();
 }
@@ -44,11 +40,11 @@ export const updateProduct = async (product: Product): Promise<PutItemOutput> =>
     return await dynamoClient.put(params).promise();
 }
 
-export const deleteProduct = async (name: string): Promise<DeleteItemOutput> => {
+export const deleteProduct = async (id: string): Promise<DeleteItemOutput> => {
     const params = {
         TableName: TABLE_NAME,
         Key: {
-            name
+            id
         }
     }
     return await dynamoClient.delete(params).promise();
@@ -56,9 +52,6 @@ export const deleteProduct = async (name: string): Promise<DeleteItemOutput> => 
 
 export const checkProductValidity = async (req: Request, res: Response, next: NextFunction) => {
     const product: Product = req.body;
-    if (req.params.name) {
-        product.name = req.params.name;
-    }
     if (!(product.name && product.price)) {
         return res.status(400).send(REQUIRED_INPUTS);
     }
@@ -69,9 +62,9 @@ export const checkProductValidity = async (req: Request, res: Response, next: Ne
 }
 
 export const checkProductExist = async (req: Request, res: Response, next: NextFunction) => {
-    const name = req.params.name;
+    const id = req.params.id;
     try {
-        const existentProduct = await getProductByName(name);
+        const existentProduct = await getProductById(id);
         if (!existentProduct) {
             return res.status(404).send(PRODUCT_NOT_FOUNT);
         }

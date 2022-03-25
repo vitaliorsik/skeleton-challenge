@@ -4,7 +4,7 @@ import {INVALID_EMAIL, REQUIRED_INPUTS, USER_ALREADY_EXIST, USER_NOT_FOUND} from
 import {User} from '../models/user';
 import {randomBytes} from 'crypto';
 import {sendNewPassword} from './email';
-import {isEmptyObject, isValidEmail} from '../utils';
+import {generateRandomString, isEmptyObject, isValidEmail} from '../utils';
 import {Request, Response, NextFunction} from 'express';
 
 const TABLE_NAME = 'users';
@@ -47,7 +47,7 @@ export const forgotPassword = async (email: string) => {
     if(!user) {
         throw new Error(USER_NOT_FOUND);
     }
-    const newPassword = randomBytes(8).toString('hex');
+    const newPassword = generateRandomString(8);
     const updatedUser = {email, password: newPassword};
     await addOrUpdateUser(updatedUser);
     await sendNewPassword(updatedUser);
