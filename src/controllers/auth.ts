@@ -6,7 +6,7 @@ import {User} from '../models/user';
 
 
 export const generateAccessToken = (user: User): string => {
-    return jwt.sign(user, config.accessTokenSecret, { expiresIn: '10m' })
+    return jwt.sign(user, config.accessTokenSecret)
 }
 
 export const verifyToken = (req: Request, res: Response, next: NextFunction) => {

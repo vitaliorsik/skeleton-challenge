@@ -16,7 +16,8 @@
     "bcrypt": "^5.0.1",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
-    "jsonwebtoken": "^8.5.1"
+    "jsonwebtoken": "^8.5.1",
+    "node-ses": "^3.0.3"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",

@@ -1,13 +1,12 @@
 import {dynamoClient} from '../constants/aws';
 import {hash} from 'bcrypt';
-import {USER_ALREADY_EXIST} from '../constants/errors';
+import {USER_ALREADY_EXIST, USER_NOT_FOUND} from '../constants/errors';
 import {User} from '../models/user';
+import {randomBytes} from 'crypto';
+import {sendNewPassword} from './email';
+import {isEmptyObject} from '../utils';
 
 const TABLE_NAME = 'users';
-
-const isEmptyObject = (object: Object): boolean => {
-    return Object.keys(object).length === 0;
-}
 
 export const getUserByEmail = async (email: string): Promise<User | null> => {
     const params = {
@@ -20,13 +19,7 @@ export const getUserByEmail = async (email: string): Promise<User | null> => {
     return isEmptyObject(user) ? null : user.Item as User;
 }
 
-export const registerUser = async (user: User): Promise<User | null> => {
-    const oldUser = await getUserByEmail(user.email);
-
-    if (oldUser) {
-        throw new Error(USER_ALREADY_EXIST);
-    }
-
+const addOrUpdateUser = async (user: User) => {
     const encryptedPassword = await hash(user.password, 10);
     const params = {
         TableName: TABLE_NAME,
@@ -36,5 +29,25 @@ export const registerUser = async (user: User): Promise<User | null> => {
         },
     }
     await dynamoClient.put(params).promise();
+}
+
+export const registerUser = async (user: User): Promise<User | null> => {
+    const oldUser = await getUserByEmail(user.email);
+
+    if (oldUser) {
+        throw new Error(USER_ALREADY_EXIST);
+    }
+    await addOrUpdateUser(user);
     return getUserByEmail(user.email);
+}
+
+export const forgotPassword = async (email: string) => {
+    const user = await getUserByEmail(email);
+    if(!user) {
+        throw new Error(USER_NOT_FOUND);
+    }
+    const newPassword = randomBytes(8).toString('hex');
+    const updatedUser = {email, password: newPassword};
+    await addOrUpdateUser(updatedUser);
+    await sendNewPassword(updatedUser);
 }

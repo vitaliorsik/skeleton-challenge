@@ -1,7 +1,8 @@
 import Product from '../models/product';
 import {ELEMENT_ALREADY_EXIST} from '../constants/errors';
 import {dynamoClient} from '../constants/aws';
-import {DeleteItemOutput, GetItemOutput, PutItemOutput, ScanOutput} from 'aws-sdk/clients/dynamodb';
+import {DeleteItemOutput, PutItemOutput, ScanOutput} from 'aws-sdk/clients/dynamodb';
+import {isEmptyObject} from '../utils';
 const TABLE_NAME = 'products';
 
 export const getProducts = async (): Promise<ScanOutput> => {
@@ -11,14 +12,15 @@ export const getProducts = async (): Promise<ScanOutput> => {
     return await dynamoClient.scan(params).promise();
 }
 
-export const getProductByName = async (name: string): Promise<GetItemOutput> => {
+export const getProductByName = async (name: string): Promise<Product> => {
     const params = {
         TableName: TABLE_NAME,
         Key: {
             name
         }
     }
-    return await dynamoClient.get(params).promise();
+    const productResult = await dynamoClient.get(params).promise();
+    return isEmptyObject(productResult) ? null : productResult.Item;
 }
 
 export const addProduct = async (product: Product): Promise<PutItemOutput> => {

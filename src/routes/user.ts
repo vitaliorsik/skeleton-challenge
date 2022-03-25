@@ -1,9 +1,16 @@
 import express from 'express';
 import {generateAccessToken} from '../controllers/auth';
 import {compare} from 'bcrypt';
-import {getUserByEmail, registerUser} from '../controllers/user';
-import {INVALID_CREDENTIALS, REQUIRED_INPUTS, UNKNOWN_ERROR, USER_ALREADY_EXIST} from '../constants/errors';
+import {forgotPassword, getUserByEmail, registerUser} from '../controllers/user';
+import {
+    INVALID_CREDENTIALS,
+    INVALID_EMAIL,
+    REQUIRED_INPUTS,
+    UNKNOWN_ERROR,
+    USER_ALREADY_EXIST, USER_NOT_FOUND
+} from '../constants/errors';
 import {UserWithToken} from '../models/user';
+import {isValidEmail} from '../utils';
 
 const userRouter = express.Router();
 
@@ -12,6 +19,9 @@ userRouter.post("/register", async (req, res) => {
         const { email, password } = req.body;
         if (!(email && password)) {
             return res.status(400).send(REQUIRED_INPUTS);
+        }
+        if (!isValidEmail(email)) {
+            return res.status(400).send(INVALID_EMAIL);
         }
 
         let token;
@@ -44,6 +54,9 @@ userRouter.post("/login", async (req, res) => {
         if (!(email && password)) {
             return res.status(400).send(REQUIRED_INPUTS);
         }
+        if (!isValidEmail(email)) {
+            return res.status(400).send(INVALID_EMAIL);
+        }
         // Validate if user exist in our database
         const user = await getUserByEmail(email);
 
@@ -66,5 +79,22 @@ userRouter.post("/login", async (req, res) => {
         console.log(err);
     }
 });
+
+userRouter.post('/forget', async (req, res) => {
+    const { email } = req.body;
+    if (!isValidEmail(email)) {
+        return res.status(400).send(INVALID_EMAIL);
+    }
+    try {
+        await forgotPassword(email);
+        return res.sendStatus(200);
+    } catch (err) {
+        if (err instanceof Error && err.message === USER_NOT_FOUND) {
+            return res.status(404).send(USER_NOT_FOUND);
+        }
+        res.status(500).json({ err: UNKNOWN_ERROR });
+        console.log(err);
+    }
+})
 
 export default userRouter;
