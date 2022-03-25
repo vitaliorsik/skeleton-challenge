@@ -26,5 +26,8 @@ DEFAULT_FROM_EMAIL=...
 PORT=...
 ```
 
+## AWS
+Configure Amazon Simple Email Service to send email message to reset an old password and set a new password.
+
 ## Postman
 There is `skeleton-challenge.postman_collection.json` to import file for Postman for products endpoints
