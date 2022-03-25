@@ -3,7 +3,7 @@ import {config} from '../constants/config';
 import {AWSError} from 'aws-sdk';
 const ses = require('node-ses');
 
-const defaultFromEmail = 'orsikvitali@gmail.com';
+const defaultFromEmail = config.defaultFromEmail;
 
 const client = ses.createClient({
     key: config.accessKeyId,
