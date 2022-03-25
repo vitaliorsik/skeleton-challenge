@@ -9,6 +9,9 @@ Make sure that the following libraries are installed:
 - [ts-node](https://www.npmjs.com/package/ts-node)
 - [nodejs](https://nodejs.org/en/)
 
+## Install
+To install all the dependencies to the application type command `npm i`
+
 ## Run
 To start the application type command `npm start`
 

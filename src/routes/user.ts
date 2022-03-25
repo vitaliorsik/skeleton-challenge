@@ -87,7 +87,7 @@ userRouter.post('/forget', async (req, res) => {
     }
     try {
         await forgotPassword(email);
-        return res.sendStatus(200);
+        return res.sendStatus(204);
     } catch (err) {
         if (err instanceof Error && err.message === USER_NOT_FOUND) {
             return res.status(404).send(USER_NOT_FOUND);

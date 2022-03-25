@@ -51,8 +51,8 @@ productRouter.post('/', async (req, res) => {
         return res.status(400).send(INVALID_PRICE);
     }
     try {
-        const newProduct = await addProduct(product);
-        res.json(newProduct);
+        await addProduct(product);
+        res.sendStatus(201);
     } catch (error) {
         console.error(error);
         if (error instanceof Error && error.message === ELEMENT_ALREADY_EXIST) {
@@ -76,8 +76,8 @@ productRouter.put('/:name', async (req, res) => {
         if (!existentProduct) {
             return res.status(404).send(PRODUCT_NOT_FOUNT);
         }
-        const updatedProduct = await updateProduct(product);
-        res.json(updatedProduct);
+        await updateProduct(product);
+        res.sendStatus(204);
     } catch (error) {
         console.error(error);
         res.status(500).send(UNKNOWN_ERROR);
@@ -91,8 +91,8 @@ productRouter.delete('/:name', async (req, res) => {
         if (!existentProduct) {
             return res.status(404).send(PRODUCT_NOT_FOUNT);
         }
-        const deletedCharacter = await deleteProduct(name);
-        res.json(deletedCharacter);
+        await deleteProduct(name);
+        res.sendStatus(204);
     } catch (error) {
         console.error(error);
         res.status(500).send(UNKNOWN_ERROR);
