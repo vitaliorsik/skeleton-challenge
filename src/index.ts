@@ -3,7 +3,7 @@ import productRouter from './routes/product';
 import userRouter from './routes/user';
 import { verifyToken } from './controllers/auth';
 const app = express();
-const port = 8080;
+const port = process.env.PORT || 8080;
 
 app.use(express.json());
 
