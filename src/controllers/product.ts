@@ -1,8 +1,9 @@
 import Product from '../models/product';
-import {ELEMENT_ALREADY_EXIST} from '../constants/errors';
+import {ELEMENT_ALREADY_EXIST, INVALID_PRICE, PRODUCT_NOT_FOUNT, REQUIRED_INPUTS} from '../constants/errors';
 import {dynamoClient} from '../constants/aws';
 import {DeleteItemOutput, PutItemOutput, ScanOutput} from 'aws-sdk/clients/dynamodb';
-import {isEmptyObject} from '../utils';
+import {isEmptyObject, isNumber} from '../utils';
+import {Request, Response, NextFunction} from 'express';
 const TABLE_NAME = 'products';
 
 export const getProducts = async (): Promise<ScanOutput> => {
@@ -51,4 +52,32 @@ export const deleteProduct = async (name: string): Promise<DeleteItemOutput> => 
         }
     }
     return await dynamoClient.delete(params).promise();
+}
+
+export const checkProductValidity = async (req: Request, res: Response, next: NextFunction) => {
+    const product: Product = req.body;
+    if (req.params.name) {
+        product.name = req.params.name;
+    }
+    if (!(product.name && product.price)) {
+        return res.status(400).send(REQUIRED_INPUTS);
+    }
+    if (!isNumber(product.price)) {
+        return res.status(400).send(INVALID_PRICE);
+    }
+    next();
+}
+
+export const checkProductExist = async (req: Request, res: Response, next: NextFunction) => {
+    const name = req.params.name;
+    try {
+        const existentProduct = await getProductByName(name);
+        if (!existentProduct) {
+            return res.status(404).send(PRODUCT_NOT_FOUNT);
+        }
+        next();
+    }
+    catch (err) {
+        next(err);
+    }
 }

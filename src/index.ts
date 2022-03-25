@@ -7,8 +7,8 @@ const port = process.env.PORT || 8080;
 
 app.use(express.json());
 
-app.use('/products', verifyToken, productRouter);
-app.use('/auth', userRouter);
+app.use('/api/products', verifyToken, productRouter);
+app.use('/api/auth', userRouter);
 
 // start the Express server
 app.listen( port, () => {

@@ -1,10 +1,11 @@
 import {dynamoClient} from '../constants/aws';
 import {hash} from 'bcrypt';
-import {USER_ALREADY_EXIST, USER_NOT_FOUND} from '../constants/errors';
+import {INVALID_EMAIL, REQUIRED_INPUTS, USER_ALREADY_EXIST, USER_NOT_FOUND} from '../constants/errors';
 import {User} from '../models/user';
 import {randomBytes} from 'crypto';
 import {sendNewPassword} from './email';
-import {isEmptyObject} from '../utils';
+import {isEmptyObject, isValidEmail} from '../utils';
+import {Request, Response, NextFunction} from 'express';
 
 const TABLE_NAME = 'users';
 
@@ -51,3 +52,14 @@ export const forgotPassword = async (email: string) => {
     await addOrUpdateUser(updatedUser);
     await sendNewPassword(updatedUser);
 }
+
+export const checkUserValidity = async (req: Request, res: Response, next: NextFunction) => {
+    const { email, password } = req.body;
+    if (!(email && password)) {
+        return res.status(400).send(REQUIRED_INPUTS);
+    }
+    if (!isValidEmail(email)) {
+        return res.status(400).send(INVALID_EMAIL);
+    }
+    next();
+};

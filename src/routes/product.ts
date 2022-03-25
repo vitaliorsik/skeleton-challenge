@@ -1,6 +1,8 @@
 import express from 'express';
 import {
     addProduct,
+    checkProductExist,
+    checkProductValidity,
     deleteProduct,
     getProductByName,
     getProducts,
@@ -9,19 +11,16 @@ import {
 import Product from '../models/product';
 import {
     ELEMENT_ALREADY_EXIST,
-    INVALID_PRICE,
     PRODUCT_NOT_FOUNT,
-    REQUIRED_INPUTS,
     UNKNOWN_ERROR
 } from '../constants/errors';
-import {isNumber} from '../utils';
 
 const productRouter = express.Router();
 
 productRouter.get('/', async (req, res) => {
     try {
-        const characters = await getProducts();
-        res.json(characters);
+        const products = await getProducts();
+        res.json(products);
     } catch (error) {
         console.error(error);
         res.status(500).send(UNKNOWN_ERROR);
@@ -42,14 +41,8 @@ productRouter.get('/:name', async (req, res) => {
     }
 })
 
-productRouter.post('/', async (req, res) => {
+productRouter.post('/', checkProductValidity, async (req, res) => {
     const product: Product = req.body;
-    if (!(product.name && product.price)) {
-        return res.status(400).send(REQUIRED_INPUTS);
-    }
-    if (!isNumber(product.price)) {
-        return res.status(400).send(INVALID_PRICE);
-    }
     try {
         await addProduct(product);
         res.sendStatus(201);
@@ -62,20 +55,10 @@ productRouter.post('/', async (req, res) => {
     }
 })
 
-productRouter.put('/:name', async (req, res) => {
+productRouter.put('/:name', checkProductValidity, checkProductExist, async (req, res) => {
     const product: Product = req.body;
     product.name = req.params.name;
-    if (!(product.name && product.price)) {
-        return res.status(400).send(REQUIRED_INPUTS);
-    }
-    if (!isNumber(product.price)) {
-        return res.status(400).send(INVALID_PRICE);
-    }
     try {
-        const existentProduct = await getProductByName(product.name);
-        if (!existentProduct) {
-            return res.status(404).send(PRODUCT_NOT_FOUNT);
-        }
         await updateProduct(product);
         res.sendStatus(204);
     } catch (error) {
@@ -84,13 +67,9 @@ productRouter.put('/:name', async (req, res) => {
     }
 })
 
-productRouter.delete('/:name', async (req, res) => {
+productRouter.delete('/:name', checkProductExist, async (req, res) => {
     const name = req.params.name;
     try {
-        const existentProduct = await getProductByName(name);
-        if (!existentProduct) {
-            return res.status(404).send(PRODUCT_NOT_FOUNT);
-        }
         await deleteProduct(name);
         res.sendStatus(204);
     } catch (error) {

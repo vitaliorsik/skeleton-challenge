@@ -1,7 +1,7 @@
 import express from 'express';
 import {generateAccessToken} from '../controllers/auth';
 import {compare} from 'bcrypt';
-import {forgotPassword, getUserByEmail, registerUser} from '../controllers/user';
+import {checkUserValidity, forgotPassword, getUserByEmail, registerUser} from '../controllers/user';
 import {
     INVALID_CREDENTIALS,
     INVALID_EMAIL,
@@ -14,15 +14,9 @@ import {isValidEmail} from '../utils';
 
 const userRouter = express.Router();
 
-userRouter.post("/register", async (req, res) => {
+userRouter.post("/register", checkUserValidity, async (req, res) => {
     try {
         const { email, password } = req.body;
-        if (!(email && password)) {
-            return res.status(400).send(REQUIRED_INPUTS);
-        }
-        if (!isValidEmail(email)) {
-            return res.status(400).send(INVALID_EMAIL);
-        }
 
         let token;
 
@@ -43,20 +37,12 @@ userRouter.post("/register", async (req, res) => {
 });
 
 // Login
-userRouter.post("/login", async (req, res) => {
+userRouter.post("/login", checkUserValidity, async (req, res) => {
 
     // Our login logic starts here
     try {
         // Get user input
         const { email, password } = req.body;
-
-        // Validate user input
-        if (!(email && password)) {
-            return res.status(400).send(REQUIRED_INPUTS);
-        }
-        if (!isValidEmail(email)) {
-            return res.status(400).send(INVALID_EMAIL);
-        }
         // Validate if user exist in our database
         const user = await getUserByEmail(email);
 
