@@ -14,7 +14,7 @@
 				{
 					"name": "/register",
 					"request": {
-						"url": "http://localhost:8080/auth/register",
+						"url": "http://localhost:8080/api/auth/register",
 						"method": "POST",
 						"header": [
 							{
@@ -34,7 +34,7 @@
 				{
 					"name": "/login",
 					"request": {
-						"url": "http://localhost:8080/auth/login",
+						"url": "http://localhost:8080/api/auth/login",
 						"method": "POST",
 						"header": [
 							{
@@ -45,7 +45,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"email\": \"cegopat526@jooffy.com\",\n\t\"password\": \"aecb7969371c159e\"\n}"
+							"raw": "{\n\t\"email\": \"cegopat526@jooffy.com\",\n\t\"password\": \"9b70f75f4319a16a\"\n}"
 						},
 						"description": ""
 					},
@@ -54,7 +54,7 @@
 				{
 					"name": "/forget",
 					"request": {
-						"url": "http://localhost:8080/auth/forget",
+						"url": "http://localhost:8080/api/auth/forget",
 						"method": "POST",
 						"header": [
 							{
@@ -78,9 +78,9 @@
 			"description": "",
 			"item": [
 				{
-					"name": "/",
+					"name": "/ (Get product list)",
 					"request": {
-						"url": "http://localhost:8080/products",
+						"url": "http://localhost:8080/api/products",
 						"method": "GET",
 						"header": [
 							{
@@ -105,7 +105,7 @@
 				{
 					"name": "/ - token required",
 					"request": {
-						"url": "http://localhost:8080/products",
+						"url": "http://localhost:8080/api/products",
 						"method": "GET",
 						"header": [
 							{
@@ -130,7 +130,7 @@
 				{
 					"name": "/ - invalid token",
 					"request": {
-						"url": "http://localhost:8080/products",
+						"url": "http://localhost:8080/api/products",
 						"method": "GET",
 						"header": [
 							{
@@ -153,9 +153,9 @@
 					"response": []
 				},
 				{
-					"name": "/",
+					"name": "/ (Create product)",
 					"request": {
-						"url": "http://localhost:8080/products",
+						"url": "http://localhost:8080/api/products",
 						"method": "POST",
 						"header": [
 							{
@@ -171,7 +171,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"Apple\",\n\t\"price\": 235\n}"
+							"raw": "{\n\t\"name\": \"Apple1\",\n\t\"price\": 235\n}"
 						},
 						"description": ""
 					},
@@ -180,7 +180,7 @@
 				{
 					"name": "/ - token required",
 					"request": {
-						"url": "http://localhost:8080/products",
+						"url": "http://localhost:8080/api/products",
 						"method": "POST",
 						"header": [
 							{
@@ -205,7 +205,7 @@
 				{
 					"name": "/ - invalid token",
 					"request": {
-						"url": "http://localhost:8080/products",
+						"url": "http://localhost:8080/api/products",
 						"method": "POST",
 						"header": [
 							{
@@ -230,7 +230,7 @@
 				{
 					"name": "/ - element exist",
 					"request": {
-						"url": "http://localhost:8080/products",
+						"url": "http://localhost:8080/api/products",
 						"method": "POST",
 						"header": [
 							{
@@ -255,7 +255,7 @@
 				{
 					"name": "/ - required inputs",
 					"request": {
-						"url": "http://localhost:8080/products",
+						"url": "http://localhost:8080/api/products",
 						"method": "POST",
 						"header": [
 							{
@@ -280,7 +280,7 @@
 				{
 					"name": "/ - invalid price",
 					"request": {
-						"url": "http://localhost:8080/products",
+						"url": "http://localhost:8080/api/products",
 						"method": "POST",
 						"header": [
 							{
@@ -305,7 +305,7 @@
 				{
 					"name": "/:name",
 					"request": {
-						"url": "http://localhost:8080/products/Apple Juice",
+						"url": "http://localhost:8080/api/products/Apple Juice",
 						"method": "GET",
 						"header": [
 							{
@@ -322,7 +322,7 @@
 				{
 					"name": "/:name - token required",
 					"request": {
-						"url": "http://localhost:8080/products/Apple Juice",
+						"url": "http://localhost:8080/api/products/Apple Juice",
 						"method": "GET",
 						"header": [],
 						"body": {},
@@ -333,7 +333,7 @@
 				{
 					"name": "/:name - invalid token",
 					"request": {
-						"url": "http://localhost:8080/products/Apple Juice",
+						"url": "http://localhost:8080/api/products/Apple Juice",
 						"method": "GET",
 						"header": [
 							{
@@ -350,7 +350,7 @@
 				{
 					"name": "/:name - not found",
 					"request": {
-						"url": "http://localhost:8080/products/Apple Juice 234344444",
+						"url": "http://localhost:8080/api/products/Apple Juice 234344444",
 						"method": "GET",
 						"header": [
 							{
@@ -367,7 +367,7 @@
 				{
 					"name": "/:name",
 					"request": {
-						"url": "http://localhost:8080/products/Apple Juice 23345",
+						"url": "http://localhost:8080/api/products/Apple1",
 						"method": "DELETE",
 						"header": [
 							{
@@ -392,7 +392,7 @@
 				{
 					"name": "/:name - token required",
 					"request": {
-						"url": "http://localhost:8080/products/Apple Juice 2355",
+						"url": "http://localhost:8080/api/products/Apple Juice 2355",
 						"method": "DELETE",
 						"header": [
 							{
@@ -417,7 +417,7 @@
 				{
 					"name": "/:name - invalid token",
 					"request": {
-						"url": "http://localhost:8080/products/Apple Juice 2355",
+						"url": "http://localhost:8080/api/products/Apple Juice 2355",
 						"method": "DELETE",
 						"header": [
 							{
@@ -442,7 +442,7 @@
 				{
 					"name": "/:name - not found",
 					"request": {
-						"url": "http://localhost:8080/products/Apple juice 4234234324",
+						"url": "http://localhost:8080/api/products/Apple juice 4234234324",
 						"method": "DELETE",
 						"header": [
 							{
@@ -468,7 +468,7 @@
 				{
 					"name": "/:name",
 					"request": {
-						"url": "http://localhost:8080/products/Apple Juice",
+						"url": "http://localhost:8080/api/products/Apple Juice",
 						"method": "PUT",
 						"header": [
 							{
@@ -493,7 +493,7 @@
 				{
 					"name": "/:name - token required",
 					"request": {
-						"url": "http://localhost:8080/products/Apple Juice",
+						"url": "http://localhost:8080/api/products/Apple Juice",
 						"method": "PUT",
 						"header": [
 							{
@@ -518,7 +518,7 @@
 				{
 					"name": "/:name - invalid token",
 					"request": {
-						"url": "http://localhost:8080/products/Apple Juice",
+						"url": "http://localhost:8080/api/products/Apple Juice",
 						"method": "PUT",
 						"header": [
 							{
@@ -543,7 +543,7 @@
 				{
 					"name": "/:name - not found",
 					"request": {
-						"url": "http://localhost:8080/products/Apple Juice 42555",
+						"url": "http://localhost:8080/api/products/Apple Juice 42555",
 						"method": "PUT",
 						"header": [
 							{
@@ -568,7 +568,7 @@
 				{
 					"name": "/:name - required inputs",
 					"request": {
-						"url": "http://localhost:8080/products/Apple Juice",
+						"url": "http://localhost:8080/api/products/Apple Juice",
 						"method": "PUT",
 						"header": [
 							{
@@ -593,7 +593,7 @@
 				{
 					"name": "/:name - invalid price",
 					"request": {
-						"url": "http://localhost:8080/products/Apple Juice",
+						"url": "http://localhost:8080/api/products/Apple Juice",
 						"method": "PUT",
 						"header": [
 							{
